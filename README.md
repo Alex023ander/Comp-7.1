@@ -1,31 +1,68 @@
 # Comp-7.1
 
-public static void main(String[] args) {
+import java.text.NumberFormat;
+public class Account {
+    private final double RATE = 0.035;  // interest rate of 3.5%
 
+   private long acctNumber;
+   private double balance;
+   private String name;
+   private static double initial=0;
 
+   //-----------------------------------------------------------------
+   //  Sets up the account by defining its owner, account number,
+   //  and initial balance.
+   //-----------------------------------------------------------------
+   public Account(String owner, long account)
+   {
+      name = owner;
+      acctNumber = account;
+      balance = initial;
+   }
 
+   //-----------------------------------------------------------------
+   //  Deposits the specified amount into the account. Returns the
+   //  new balance.
+   //-----------------------------------------------------------------
+   public double deposit(double amount)
+   {
+      balance = balance + amount;
+      return balance;
+   }
 
-	Account acct1 = new Account("Alex Tanaka", 72354);
-	Account acct2 = new Account("Justin Yang", 69713);
-	Account acct3 = new Account("Edward Demsey", 93757);
+   //-----------------------------------------------------------------
+   //  Withdraws the specified amount from the account and applies
+   //  the fee. Returns the new balance.
+   //-----------------------------------------------------------------
+   public double withdraw(double amount, double fee)
+   {
+      balance = balance - amount - fee;
+      return balance;
+   }
 
-	      acct1.deposit(60.75);
+   //-----------------------------------------------------------------
+   //  Adds interest to the account and returns the new balance.
+   //-----------------------------------------------------------------
+   public double addInterest()
+   {
+      balance += (balance * RATE);
+      return balance;
+   }
 
-	      double yangBalance = acct2.deposit(1000.00);
-	      System.out.println("Yang balance after deposit: " +
-	                          yangBalance);
+   //-----------------------------------------------------------------
+   //  Returns the current balance of the account.
+   //-----------------------------------------------------------------
+   public double getBalance()
+   {
+      return balance;
+   }
 
-	      System.out.println("Yang balance after withdrawal: " + 
-	                          acct2.withdraw (430.75, 1.50));
-
-	      acct1.addInterest();
-	      acct2.addInterest();
-	      acct3.addInterest();
-
-	      System.out.println();
-	      System.out.println(acct1);
-	      System.out.println(acct2);
-	      System.out.println(acct3);
-	      
-    }
+   //-----------------------------------------------------------------
+   //  Returns a one-line description of the account as a string.
+   //-----------------------------------------------------------------
+   public String toString()
+   {
+      NumberFormat fmt = NumberFormat.getCurrencyInstance();
+      return (acctNumber + "\t" + name + "\t" + fmt.format(balance));
+   }
 }
